@@ -1,10 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
-import RestaurantsScreen from "../screens/RestaurantsScreen";
-import FavoritesScreen from "../screens/FavoritesScreen";
-import RankingScreen from "../screens/RankingScreen";
-import SearchScreen from "../screens/SearchScreen";
-import AccountScreen from "../screens/AccountScreen";
+
+import RestaurantStack from "./RestaurantStack";
+import FavoritesStack from "./FavoritesStack";
+import RankingStack from "./RankingStack";
+import SearchStack from "./SearchStack";
+import AccountStack from "./AccountStack";
+
 import { screen } from "../utils/screenName";
 
 const Tab = createBottomTabNavigator();
@@ -13,6 +15,7 @@ export function AppNavigation() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarActiveTintColor: "#00a680",
         tabBarInactiveTintColor: "#646464",
         tabBarIcon: ({ color, size }) => tabBarIconOptions(route, color, size),
@@ -20,27 +23,27 @@ export function AppNavigation() {
     >
       <Tab.Screen
         name={screen.restaurant.tab}
-        component={RestaurantsScreen}
+        component={RestaurantStack}
         options={{ title: "Restaurantes" }}
       />
       <Tab.Screen
         name={screen.favorites.tab}
-        component={FavoritesScreen}
+        component={FavoritesStack}
         options={{ title: "Favoritos" }}
       />
       <Tab.Screen
         name={screen.ranking.tab}
-        component={RankingScreen}
+        component={RankingStack}
         options={{ title: "Rankings" }}
       />
       <Tab.Screen
         name={screen.search.tab}
-        component={SearchScreen}
+        component={SearchStack}
         options={{ title: "Buscar" }}
       />
       <Tab.Screen
         name={screen.account.tab}
-        component={AccountScreen}
+        component={AccountStack}
         options={{ title: "Cuenta" }}
       />
     </Tab.Navigator>
