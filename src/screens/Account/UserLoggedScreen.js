@@ -5,7 +5,7 @@ export default class UserLoggedScreen extends Component {
   render() {
     return (
       <View>
-        <Text> textInComponent </Text>
+        <Text> Mi Cuenta </Text>
       </View>
     );
   }
