@@ -5,6 +5,7 @@ import { map } from "lodash";
 import Modal from "../shared/Modal/Modal";
 import DisplayNameForm from "./DisplayNameForm/DisplayNameForm";
 import EmailForm from "./EmailForm/EmailForm";
+import PasswordForm from "./PasswordForm/PasswordForm";
 
 export default function AccountOptions(props) {
   const { onReload } = props;
@@ -28,7 +29,7 @@ export default function AccountOptions(props) {
     }
 
     if (key === "password") {
-      setRenderModal(<Text>Cambiar Contraseña</Text>);
+      setRenderModal(<PasswordForm onClose={onCloseOpenModal} />);
     }
 
     onCloseOpenModal();
