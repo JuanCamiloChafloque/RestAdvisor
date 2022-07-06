@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
-import { ListItem, Icon } from "react-native-elements";
+import { ListItem, Icon, Text } from "react-native-elements";
 import { map } from "lodash";
+import Modal from "../shared/Modal/Modal";
 
 export default function AccountOptions() {
-  const menuOptions = getMenuOptions();
+  const [showModal, setShowModal] = useState(false);
+  const [renderModal, setRenderModal] = useState(null);
 
+  const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
+
+  const selectedComponent = (key) => {
+    if (key === "displayName") {
+      setRenderModal(<Text>Cambiar Nombre y Apellidos</Text>);
+    }
+
+    if (key === "email") {
+      setRenderModal(<Text>Cambiar Email</Text>);
+    }
+
+    if (key === "password") {
+      setRenderModal(<Text>Cambiar Contraseña</Text>);
+    }
+
+    onCloseOpenModal();
+  };
+
+  const menuOptions = getMenuOptions(selectedComponent);
   return (
     <View>
       {map(menuOptions, (menu, i) => (
@@ -25,11 +46,15 @@ export default function AccountOptions() {
           />
         </ListItem>
       ))}
+
+      <Modal show={showModal} close={onCloseOpenModal}>
+        {renderModal}
+      </Modal>
     </View>
   );
 }
 
-function getMenuOptions() {
+function getMenuOptions(selectedComponent) {
   return [
     {
       title: "Cambiar Nombre y Apellidos",
@@ -38,7 +63,7 @@ function getMenuOptions() {
       iconColorLeft: "#ccc",
       iconNameRight: "chevron-right",
       iconColorRight: "#ccc",
-      onPress: () => {},
+      onPress: () => selectedComponent("displayName"),
     },
     {
       title: "Cambiar Email",
@@ -47,7 +72,7 @@ function getMenuOptions() {
       iconColorLeft: "#ccc",
       iconNameRight: "chevron-right",
       iconColorRight: "#ccc",
-      onPress: () => {},
+      onPress: () => selectedComponent("email"),
     },
     {
       title: "Cambiar Contraseña",
@@ -56,7 +81,7 @@ function getMenuOptions() {
       iconColorLeft: "#ccc",
       iconNameRight: "chevron-right",
       iconColorRight: "#ccc",
-      onPress: () => {},
+      onPress: () => selectedComponent("password"),
     },
   ];
 }
