@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Alert } from "react-native";
+import { ScrollView, Alert } from "react-native";
 import { Icon, Avatar, Text } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import { v4 as uuid } from "uuid";
+import { map } from "lodash";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import LoadingModal from "../../../shared/LoadingModal/LoadingModal";
 import { styles } from "./UploadImageFormStyles";
@@ -45,7 +46,11 @@ export default function UploadImageForm(props) {
 
   return (
     <>
-      <View style={styles.viewImage}>
+      <ScrollView
+        style={styles.viewImage}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      >
         <Icon
           type="material-community"
           name="camera"
@@ -53,7 +58,14 @@ export default function UploadImageForm(props) {
           containerStyle={styles.containerIcon}
           onPress={openGallery}
         />
-      </View>
+        {map(formik.values.images, (url) => (
+          <Avatar
+            key={url}
+            source={{ uri: url }}
+            containerStyle={styles.imageStyle}
+          />
+        ))}
+      </ScrollView>
       <Text style={styles.error}>{formik.errors.images}</Text>
       <LoadingModal show={loading} text="Subiendo imagen" />
     </>
