@@ -19,6 +19,9 @@ export default function AddRestaurantScreen() {
         .required("El email es obligatorio"),
       description: Yup.string().required("La descripción es obligatoria"),
       location: Yup.object().required("La Localización es obligatoria"),
+      images: Yup.array()
+        .min(1, "Se require una imagen como minimo")
+        .required("La imagen del restaurante es obligatoria"),
     });
   };
 
@@ -30,6 +33,7 @@ export default function AddRestaurantScreen() {
       email: "",
       description: "",
       location: null,
+      images: [],
     },
     validationSchema: validationSchema(),
     validateOnChange: false,
