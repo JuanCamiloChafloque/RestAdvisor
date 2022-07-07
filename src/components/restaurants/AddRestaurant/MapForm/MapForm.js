@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import * as Location from "expo-location";
+import MapView from "react-native-maps";
 import Toast from "react-native-toast-message";
 import Modal from "../../../shared/Modal/Modal";
 import { styles } from "./MapFormStyles";
@@ -35,5 +36,18 @@ export default function MapForm(props) {
     })();
   }, []);
 
-  return <Modal show={show} close={close}></Modal>;
+  return (
+    <Modal show={show} close={close}>
+      <View>
+        <MapView
+          initialRegion={location}
+          showsUserLocation={true}
+          style={styles.map}
+          onRegionChange={(locationTemp) => setLocation(locationTemp)}
+        >
+          <MapView.Marker draggable coordinate={location} />
+        </MapView>
+      </View>
+    </Modal>
+  );
 }
