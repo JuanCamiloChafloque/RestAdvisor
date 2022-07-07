@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Toast from "react-native-toast-message";
 import InfoForm from "../../../components/restaurants/AddRestaurant/InfoForm/InfoForm";
+import UploadImageForm from "../../../components/restaurants/AddRestaurant/UploadImageForm/UploadImageForm";
 import { styles } from "./AddRestaurantScreenStyles";
 
 export default function AddRestaurantScreen() {
@@ -48,6 +49,7 @@ export default function AddRestaurantScreen() {
   return (
     <View>
       <InfoForm formik={formik} />
+      <UploadImageForm formik={formik} />
       <Button
         title="Crear Restaurante"
         buttonStyle={styles.btn}
