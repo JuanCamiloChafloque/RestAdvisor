@@ -1,15 +1,22 @@
 import React from "react";
 import { ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-elements";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { v4 as uuid } from "uuid";
 import Toast from "react-native-toast-message";
+import { doc, setDoc } from "firebase/firestore";
 import InfoForm from "../../../components/restaurants/AddRestaurant/InfoForm/InfoForm";
 import UploadImageForm from "../../../components/restaurants/AddRestaurant/UploadImageForm/UploadImageForm";
 import ImageRestaurant from "../../../components/restaurants/AddRestaurant/ImageRestaurant/ImageRestaurant";
+import { db } from "../../../utils/firebase";
 import { styles } from "./AddRestaurantScreenStyles";
+import { screen } from "../../../utils/screenName";
 
 export default function AddRestaurantScreen() {
+  const navigation = useNavigation();
+
   const validationSchema = () => {
     return Yup.object({
       name: Yup.string().required("El nombre es obligatorio"),
@@ -40,6 +47,12 @@ export default function AddRestaurantScreen() {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
+        const newData = formValue;
+        newData.id = uuid();
+        newData.createdAt = new Date();
+        const ref = doc(db, "restaurants", newData.id);
+        await setDoc(ref, newData);
+        navigation.navigate(screen.restaurant.restaurants);
       } catch (error) {
         Toast.show({
           type: "error",
