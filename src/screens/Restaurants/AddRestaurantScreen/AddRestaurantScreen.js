@@ -17,6 +17,7 @@ export default function AddRestaurantScreen() {
         .email("No es un email valido")
         .required("El email es obligatorio"),
       description: Yup.string().required("La descripción es obligatoria"),
+      location: Yup.object().required("La Localización es obligatoria"),
     });
   };
 
@@ -27,6 +28,7 @@ export default function AddRestaurantScreen() {
       phone: "",
       email: "",
       description: "",
+      location: null,
     },
     validationSchema: validationSchema(),
     validateOnChange: false,
