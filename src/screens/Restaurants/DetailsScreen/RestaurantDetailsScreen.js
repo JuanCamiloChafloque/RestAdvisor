@@ -13,6 +13,7 @@ import LoadingModal from "../../../components/shared/LoadingModal/LoadingModal";
 import Carousel from "../../../components/shared/Carousel/Carousel";
 import Header from "../../../components/restaurant/Header/Header";
 import Information from "../../../components/restaurant/Information/Information";
+import ReviewList from "../../../components/restaurant/Reviews/ReviewList/ReviewList";
 import ReviewForm from "../../../components/restaurant/Reviews/ReviewForm/ReviewForm";
 import { styles } from "./RestaurantDetailsScreenStyles";
 
@@ -37,6 +38,7 @@ export default function RestaurantDetailsScreen(props) {
       <Header restaurant={restaurant} />
       <Information restaurant={restaurant} />
       <ReviewForm id={restaurant.id} />
+      <ReviewList id={restaurant.id} />
     </ScrollView>
   );
 }
