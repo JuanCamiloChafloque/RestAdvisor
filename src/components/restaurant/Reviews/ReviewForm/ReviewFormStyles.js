@@ -5,6 +5,15 @@ export const styles = StyleSheet.create({
     margin: 15,
   },
 
+  btn: {
+    backgroundColor: "transparent",
+  },
+
+  btnTitle: {
+    color: "#00a680",
+    fontWeight: "bold",
+  },
+
   text: {
     textAlign: "center",
     color: "#00a680",
