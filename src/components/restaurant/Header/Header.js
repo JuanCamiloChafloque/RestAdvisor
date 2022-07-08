@@ -10,7 +10,7 @@ export default function Header(props) {
     <View style={styles.content}>
       <View style={styles.titleView}>
         <Text style={styles.name}>{restaurant.name}</Text>
-        <Rating imageSize={20} readOnly startingValue={5} />
+        <Rating imageSize={20} readOnly startingValue={restaurant.rating | 0} />
       </View>
       <Text style={styles.description}>{restaurant.description}</Text>
     </View>

@@ -14,6 +14,13 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+  hasReview: {
+    textAlign: "center",
+    color: "#00a680",
+    fontWeight: "bold",
+    padding: 20,
+  },
+
   text: {
     textAlign: "center",
     color: "#00a680",
