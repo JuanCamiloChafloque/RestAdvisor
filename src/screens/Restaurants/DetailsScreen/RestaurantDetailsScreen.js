@@ -9,6 +9,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db } from "../../../utils/firebase";
+import LoadingModal from "../../../components/shared/LoadingModal/LoadingModal";
 import Carousel from "../../../components/shared/Carousel/Carousel";
 import { styles } from "./RestaurantDetailsScreenStyles";
 
@@ -25,7 +26,7 @@ export default function RestaurantDetailsScreen(props) {
     });
   }, [route.params.id]);
 
-  if (!restaurant) return null;
+  if (!restaurant) return <LoadingModal show text="Cargando Restaurante" />;
 
   return (
     <ScrollView styles={styles.content}>
