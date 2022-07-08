@@ -4,6 +4,18 @@ import { AirbnbRating, Input, Button } from "react-native-elements";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Toast from "react-native-toast-message";
+import { v4 as uuid } from "uuid";
+import { getAuth } from "firebase/auth";
+import {
+  doc,
+  setDoc,
+  query,
+  collection,
+  where,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../../utils/firebase";
 import { styles } from "./AddReviewScreenStyles";
 
 export default function AddReviewScreen(props) {
@@ -27,6 +39,16 @@ export default function AddReviewScreen(props) {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
+        const auth = getAuth();
+        const idDoc = uuid();
+        const newData = formValue;
+        newData.id = idDoc;
+        newData.idRestaurant = route.params.id;
+        newData.idUser = auth.currentUser.uid;
+        newData.avatar = auth.currentUser.photoURL;
+        newData.createdAt = new Date();
+
+        await setDoc(doc(db, "reviews", idDoc), newData);
       } catch (error) {
         Toast.show({
           type: "error",
