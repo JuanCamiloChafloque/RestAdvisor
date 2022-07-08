@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { AirbnbRating, Input, Button } from "react-native-elements";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -16,10 +17,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../../utils/firebase";
+import { map, mean } from "lodash";
 import { styles } from "./AddReviewScreenStyles";
 
 export default function AddReviewScreen(props) {
   const { route } = props;
+  const navigation = useNavigation();
 
   const validationSchema = () => {
     return Yup.object({
@@ -49,6 +52,7 @@ export default function AddReviewScreen(props) {
         newData.createdAt = new Date();
 
         await setDoc(doc(db, "reviews", idDoc), newData);
+        await updateRestaurant();
       } catch (error) {
         Toast.show({
           type: "error",
@@ -59,6 +63,24 @@ export default function AddReviewScreen(props) {
       }
     },
   });
+
+  const updateRestaurant = async () => {
+    const q = query(
+      collection(db, "reviews"),
+      where("idRestaurant", "==", route.params.id)
+    );
+
+    onSnapshot(q, async (snapshot) => {
+      const reviews = snapshot.docs;
+      const arrayStars = map(reviews, (review) => review.data().rating);
+      const media = mean(arrayStars);
+      const restaurantRef = doc(db, "restaurants", route.params.id);
+      await updateDoc(restaurantRef, {
+        rating: media,
+      });
+      navigation.goBack();
+    });
+  };
 
   return (
     <View style={styles.content}>
