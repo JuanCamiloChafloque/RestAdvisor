@@ -11,6 +11,7 @@ import {
 import { db } from "../../../utils/firebase";
 import LoadingModal from "../../../components/shared/LoadingModal/LoadingModal";
 import Carousel from "../../../components/shared/Carousel/Carousel";
+import Header from "../../../components/restaurant/Header/Header";
 import { styles } from "./RestaurantDetailsScreenStyles";
 
 const { width } = Dimensions.get("window");
@@ -29,8 +30,9 @@ export default function RestaurantDetailsScreen(props) {
   if (!restaurant) return <LoadingModal show text="Cargando Restaurante" />;
 
   return (
-    <ScrollView styles={styles.content}>
+    <ScrollView style={styles.content}>
       <Carousel images={restaurant.images} width={width} height={250} />
+      <Header restaurant={restaurant} />
     </ScrollView>
   );
 }
