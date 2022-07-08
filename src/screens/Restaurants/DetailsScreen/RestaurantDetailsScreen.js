@@ -13,6 +13,7 @@ import LoadingModal from "../../../components/shared/LoadingModal/LoadingModal";
 import Carousel from "../../../components/shared/Carousel/Carousel";
 import Header from "../../../components/restaurant/Header/Header";
 import Information from "../../../components/restaurant/Information/Information";
+import ReviewForm from "../../../components/restaurant/Reviews/ReviewForm/ReviewForm";
 import { styles } from "./RestaurantDetailsScreenStyles";
 
 const { width } = Dimensions.get("window");
@@ -35,6 +36,7 @@ export default function RestaurantDetailsScreen(props) {
       <Carousel images={restaurant.images} width={width} height={250} />
       <Header restaurant={restaurant} />
       <Information restaurant={restaurant} />
+      <ReviewForm id={restaurant.id} />
     </ScrollView>
   );
 }
